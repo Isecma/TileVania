@@ -105,6 +105,7 @@ public class PlayerMovement : MonoBehaviour
         if (Mathf.Abs(moveInput.y) > 0f)
         {
             animator.StopPlayback();
+            animator.SetBool("IsRunning", false);
             animator.SetBool("IsClimbing", true);
             playerClimbingVelocity = new Vector2(moveInput.x, (moveInput.y) * climbSpeed);
             myRigidbody.velocity = playerClimbingVelocity;
