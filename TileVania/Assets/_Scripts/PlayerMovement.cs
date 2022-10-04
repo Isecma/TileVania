@@ -13,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpSpeed;
     [SerializeField] float climbSpeed;
     [SerializeField] float flingSpeed;
+    [SerializeField] GameObject gun;
+    [SerializeField] GameObject bullet;
     [SerializeField] CinemachineVirtualCamera deathCamera;
 
     Vector2 moveInput;
@@ -87,6 +89,15 @@ public class PlayerMovement : MonoBehaviour
             myRigidbody.velocity += new Vector2(0f, jumpSpeed);
             numberOfJumps--;
         }
+    }
+
+    void OnFire(InputValue value)
+    {
+        if (!isAlive) { return; }
+
+        animator.SetTrigger("OnAttack");
+        Vector2 bowPosition = new Vector2 (gun.transform.position.x, gun.transform.position.y);
+        Instantiate(bullet, bowPosition, transform.rotation);
     }
 
     void OnCollisionEnter2D(Collision2D collision)
