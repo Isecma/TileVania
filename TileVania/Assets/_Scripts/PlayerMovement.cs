@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody2D myRigidbody;
     Animator animator;
     int groundMask;
+    int bouncingMask;
     int ladderMask;
     float defaultGravity;
 
@@ -28,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
         myRigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         groundMask = LayerMask.GetMask("Ground");
+        bouncingMask = LayerMask.GetMask("Bouncing");
         ladderMask = LayerMask.GetMask("Ladder");
         defaultGravity = myRigidbody.gravityScale;
     }
@@ -73,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.otherCollider.GetComponent<BoxCollider2D>().IsTouchingLayers(groundMask))
+        if (collision.otherCollider.GetComponent<BoxCollider2D>().IsTouchingLayers(groundMask) || collision.otherCollider.GetComponent<BoxCollider2D>().IsTouchingLayers(bouncingMask))
         {
             numberOfJumps = 2;
         } 
