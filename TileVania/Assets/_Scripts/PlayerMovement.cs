@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,16 +13,19 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpSpeed;
     [SerializeField] float climbSpeed;
     [SerializeField] float flingSpeed;
-        
+    [SerializeField] CinemachineVirtualCamera deathCamera;
+
     Vector2 moveInput;
     Rigidbody2D myRigidbody;
     Animator animator;
     CapsuleCollider2D bodyCollider;
+    BoxCollider2D feetCollider;
 
     int groundMask;
     int bouncingMask;
     int ladderMask;
     int enemyMask;
+    int hazardMask;
     float defaultGravity;
 
     bool isAlive = true;
@@ -33,10 +37,13 @@ public class PlayerMovement : MonoBehaviour
         myRigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         bodyCollider = GetComponent<CapsuleCollider2D>();
+        feetCollider = GetComponent<BoxCollider2D>();
+
         groundMask = LayerMask.GetMask("Ground");
         bouncingMask = LayerMask.GetMask("Bouncing");
         ladderMask = LayerMask.GetMask("Ladder");
         enemyMask = LayerMask.GetMask("Enemies");
+        hazardMask = LayerMask.GetMask("Hazards");
         defaultGravity = myRigidbody.gravityScale;
     }
 
@@ -139,10 +146,13 @@ public class PlayerMovement : MonoBehaviour
 
     void Die()
     {
-        if (bodyCollider.IsTouchingLayers(enemyMask))
+        if (bodyCollider.IsTouchingLayers(enemyMask) || myRigidbody.IsTouchingLayers(hazardMask))
         {
             isAlive = false;
             animator.SetTrigger("OnDeath");
+            bodyCollider.isTrigger = true;
+            feetCollider.isTrigger = true;
+            deathCamera.transform.position = new Vector3(myRigidbody.position.x, myRigidbody.position.y, -1);
             Vector2 playerFling = new Vector2(-(Mathf.Sign(moveInput.x)), flingSpeed);
             myRigidbody.velocity = playerFling;
         } 
