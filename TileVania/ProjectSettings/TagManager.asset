@@ -19,7 +19,7 @@ TagManager:
   - Ladder
   - Player
   - Background
-  - 
+  - Bouncing
   - 
   - 
   - 
@@ -45,11 +45,11 @@ TagManager:
   - name: Background
     uniqueID: 3983353809
     locked: 0
-  - name: Platforms
-    uniqueID: 1928756989
-    locked: 0
   - name: Climbing
     uniqueID: 3967153227
+    locked: 0
+  - name: Platforms
+    uniqueID: 1928756989
     locked: 0
   - name: Player
     uniqueID: 748450395
