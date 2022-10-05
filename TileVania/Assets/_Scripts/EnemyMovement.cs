@@ -6,18 +6,27 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
     [SerializeField] float enemySpeed;
-    
-    Rigidbody2D myRigidbody;
 
+    [HideInInspector] public bool isDead;
+
+    Animator animator;
+    Rigidbody2D myRigidbody;
 
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
 
     void Update()
     {
+        if (isDead) 
+        {
+            StartCoroutine(DestroyEnemy());
+            return;
+        }
+
         myRigidbody.velocity = new Vector2 (enemySpeed, 0);
     }
 
@@ -30,6 +39,15 @@ public class EnemyMovement : MonoBehaviour
 
     void FlipEnemyFacing()
     {
+        if (isDead) { return; }
         transform.localScale = new Vector2(-(myRigidbody.velocity.x), 1f);
+    }
+
+    IEnumerator DestroyEnemy()
+    {
+        myRigidbody.velocity = new Vector2(0, 0);
+        animator.SetTrigger("OnDeath");
+        yield return new WaitForSecondsRealtime(0.3f);
+        Destroy(gameObject);
     }
 }

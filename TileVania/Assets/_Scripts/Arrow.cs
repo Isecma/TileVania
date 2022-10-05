@@ -9,6 +9,7 @@ public class Arrow : MonoBehaviour
     float playerDirection;
     bool hasStopped;
     PlayerMovement playerMovement;
+    EnemyMovement enemyMovement;
     Animator animator;
     Rigidbody2D myRigidbody;
 
@@ -16,6 +17,7 @@ public class Arrow : MonoBehaviour
     {
         myRigidbody = GetComponent<Rigidbody2D>();
         playerMovement = FindObjectOfType<PlayerMovement>();
+        enemyMovement = FindObjectOfType<EnemyMovement>();
         animator = GetComponent<Animator>();
         playerDirection = playerMovement.transform.localScale.x;
     }
@@ -32,7 +34,7 @@ public class Arrow : MonoBehaviour
     {
         if (collision.tag == "Enemies")
         {
-            Destroy(collision.gameObject);
+            enemyMovement.isDead = true;
             DestroyArrow();
         }
         hasStopped = true;

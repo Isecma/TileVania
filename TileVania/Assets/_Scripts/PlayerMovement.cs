@@ -6,6 +6,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -166,6 +167,13 @@ public class PlayerMovement : MonoBehaviour
             deathCamera.transform.position = new Vector3(myRigidbody.position.x, myRigidbody.position.y, -1);
             Vector2 playerFling = new Vector2(-(Mathf.Sign(moveInput.x)), flingSpeed);
             myRigidbody.velocity = playerFling;
+            StartCoroutine(ReloadLevel());
         } 
+    }
+
+    IEnumerator ReloadLevel()
+    {
+        yield return new WaitForSecondsRealtime(2);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

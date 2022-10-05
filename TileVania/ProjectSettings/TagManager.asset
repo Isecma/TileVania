@@ -24,7 +24,7 @@ TagManager:
   - Enemies
   - Hazards
   - Bullets
-  - 
+  - Interactables
   - 
   - 
   - 
@@ -45,6 +45,9 @@ TagManager:
     locked: 0
   - name: Background
     uniqueID: 3983353809
+    locked: 0
+  - name: Interactables
+    uniqueID: 2468881205
     locked: 0
   - name: Climbing
     uniqueID: 3967153227
