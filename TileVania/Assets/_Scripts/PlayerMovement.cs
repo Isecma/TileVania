@@ -14,11 +14,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpSpeed;
     [SerializeField] float climbSpeed;
     [SerializeField] float flingSpeed;
-    [SerializeField] GameObject gun;
-    [SerializeField] GameObject bullet;
-    [SerializeField] CinemachineVirtualCamera deathCamera;
+    [SerializeField] GameObject bow;
+    [SerializeField] GameObject arrow;
+    [SerializeField] AudioClip hitSound;
 
     Vector2 moveInput;
+    CinemachineVirtualCamera deathCamera;
     Rigidbody2D myRigidbody;
     Animator animator;
     CapsuleCollider2D bodyCollider;
@@ -41,7 +42,9 @@ public class PlayerMovement : MonoBehaviour
         animator = GetComponent<Animator>();
         bodyCollider = GetComponent<CapsuleCollider2D>();
         feetCollider = GetComponent<BoxCollider2D>();
+        bow = GameObject.Find("Bow");
 
+        deathCamera = GameObject.Find("Death Camera").GetComponent<CinemachineVirtualCamera>();
         groundMask = LayerMask.GetMask("Ground");
         bouncingMask = LayerMask.GetMask("Bouncing");
         ladderMask = LayerMask.GetMask("Ladder");
@@ -97,8 +100,8 @@ public class PlayerMovement : MonoBehaviour
         if (!isAlive) { return; }
 
         animator.SetTrigger("OnAttack");
-        Vector2 bowPosition = new Vector2 (gun.transform.position.x, gun.transform.position.y);
-        Instantiate(bullet, bowPosition, transform.rotation);
+        Vector2 bowPosition = new Vector2 (bow.transform.position.x, bow.transform.position.y);
+        Instantiate(arrow, bowPosition, transform.rotation);
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -158,8 +161,11 @@ public class PlayerMovement : MonoBehaviour
 
     void Die()
     {
+        if (!isAlive) { return; }
+
         if (bodyCollider.IsTouchingLayers(enemyMask) || myRigidbody.IsTouchingLayers(hazardMask))
         {
+            AudioSource.PlayClipAtPoint(hitSound, transform.position);
             isAlive = false;
             animator.SetTrigger("OnDeath");
             bodyCollider.isTrigger = true;
@@ -167,13 +173,8 @@ public class PlayerMovement : MonoBehaviour
             deathCamera.transform.position = new Vector3(myRigidbody.position.x, myRigidbody.position.y, -1);
             Vector2 playerFling = new Vector2(-(Mathf.Sign(moveInput.x)), flingSpeed);
             myRigidbody.velocity = playerFling;
-            StartCoroutine(ReloadLevel());
+            FindObjectOfType<GameSession>().ProcessPlayerDeath();
         } 
     }
 
-    IEnumerator ReloadLevel()
-    {
-        yield return new WaitForSecondsRealtime(2);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
 }

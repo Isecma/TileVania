@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 466815305}
   m_Layer: 11
-  m_Name: Gun
+  m_Name: Bow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -225,9 +225,9 @@ MonoBehaviour:
   jumpSpeed: 5
   climbSpeed: 2
   flingSpeed: 5
-  gun: {fileID: 466815304}
-  bullet: {fileID: 7196790126858217908, guid: f9d5ccd597d800f4bbdca91369954373, type: 3}
-  deathCamera: {fileID: 0}
+  bow: {fileID: 0}
+  arrow: {fileID: 7196790126858217908, guid: f9d5ccd597d800f4bbdca91369954373, type: 3}
+  hitSound: {fileID: 8300000, guid: 5cc21bd4f72147b4ea7f23d50e2d0d32, type: 3}
 --- !u!61 &1814038385
 BoxCollider2D:
   m_ObjectHideFlags: 0
