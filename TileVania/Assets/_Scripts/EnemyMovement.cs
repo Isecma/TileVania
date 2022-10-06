@@ -2,13 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class EnemyMovement : MonoBehaviour
 {
     [SerializeField] float enemySpeed;
+    [SerializeField] GameObject coin;
     public AudioClip enemyDeathSFX;
 
     public bool isDead;
+    public bool hasDroppedCoin;
 
     public Rigidbody2D myRigidbody;
 
@@ -22,6 +25,12 @@ public class EnemyMovement : MonoBehaviour
     {
         if (isDead)
         {
+            if (!hasDroppedCoin)
+            {
+                DropCoin();
+                hasDroppedCoin = true;
+            }
+            
             return; 
         }
         myRigidbody.velocity = new Vector2 (enemySpeed, 0);
@@ -37,5 +46,11 @@ public class EnemyMovement : MonoBehaviour
     void FlipEnemyFacing()
     {
         transform.localScale = new Vector2(-(myRigidbody.velocity.x), 1f);
+    }
+
+    void DropCoin()
+    {
+        Vector2 coinDropPosition = new Vector2(transform.position.x, transform.position.y);
+        Instantiate(coin, coinDropPosition, transform.rotation);
     }
 }

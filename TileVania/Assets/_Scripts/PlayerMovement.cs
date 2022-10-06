@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] GameObject bow;
     [SerializeField] GameObject arrow;
     [SerializeField] AudioClip hitSFX;
+    [SerializeField] AudioClip bounceSFX;
 
     Vector2 moveInput;
     CinemachineVirtualCamera deathCamera;
@@ -109,7 +110,12 @@ public class PlayerMovement : MonoBehaviour
         if (collision.otherCollider.GetComponent<BoxCollider2D>().IsTouchingLayers(groundMask) || collision.otherCollider.GetComponent<BoxCollider2D>().IsTouchingLayers(bouncingMask))
         {
             numberOfJumps = 2;
-        } 
+        }
+        if (collision.otherCollider.GetComponent<BoxCollider2D>().IsTouchingLayers(bouncingMask))
+        {
+            AudioSource.PlayClipAtPoint(bounceSFX, transform.position);
+        }
+            
 
     }
 
@@ -168,8 +174,8 @@ public class PlayerMovement : MonoBehaviour
             AudioSource.PlayClipAtPoint(hitSFX, transform.position);
             isAlive = false;
             animator.SetTrigger("OnDeath");
-            bodyCollider.isTrigger = true;
-            feetCollider.isTrigger = true;
+            bodyCollider.enabled = false;
+            feetCollider.enabled = false;
             deathCamera.transform.position = new Vector3(myRigidbody.position.x, myRigidbody.position.y, -1);
             Vector2 playerFling = new Vector2(-(Mathf.Sign(moveInput.x)), flingSpeed);
             myRigidbody.velocity = playerFling;

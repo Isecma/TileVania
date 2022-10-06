@@ -228,6 +228,7 @@ MonoBehaviour:
   bow: {fileID: 0}
   arrow: {fileID: 7196790126858217908, guid: f9d5ccd597d800f4bbdca91369954373, type: 3}
   hitSFX: {fileID: 8300000, guid: 5cc21bd4f72147b4ea7f23d50e2d0d32, type: 3}
+  bounceSFX: {fileID: 8300000, guid: 7b57f5ba50db4264f825e0b94cddfd88, type: 3}
 --- !u!61 &1814038385
 BoxCollider2D:
   m_ObjectHideFlags: 0

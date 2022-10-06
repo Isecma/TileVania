@@ -5,9 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class LevelExit : MonoBehaviour
 {
+    [SerializeField] AudioClip nextLevelSFX;
+
     void OnTriggerEnter2D(Collider2D collision)
     {
-            StartCoroutine(NextLevel());       
+        AudioSource.PlayClipAtPoint(nextLevelSFX, transform.position);
+        StartCoroutine(NextLevel());       
     }
 
     IEnumerator NextLevel()
