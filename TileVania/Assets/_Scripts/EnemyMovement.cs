@@ -6,7 +6,7 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
     [SerializeField] float enemySpeed;
-    public AudioClip enemyDeathSound;
+    public AudioClip enemyDeathSFX;
 
     public bool isDead;
 
@@ -36,7 +36,6 @@ public class EnemyMovement : MonoBehaviour
 
     void FlipEnemyFacing()
     {
-        if (isDead) { return; }
         transform.localScale = new Vector2(-(myRigidbody.velocity.x), 1f);
     }
 }

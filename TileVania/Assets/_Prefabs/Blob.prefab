@@ -185,5 +185,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemySpeed: 1
-  enemyDeathSound: {fileID: 8300000, guid: b2ba1353eff328642a9ab9a9e80c023e, type: 3}
+  enemyDeathSFX: {fileID: 8300000, guid: b2ba1353eff328642a9ab9a9e80c023e, type: 3}
   isDead: 0
+  myRigidbody: {fileID: 0}

@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrowSpeed: 10
-  arrowSound: {fileID: 8300000, guid: f297883571676c344924e49d73037266, type: 3}
+  arrowSFX: {fileID: 8300000, guid: f297883571676c344924e49d73037266, type: 3}
 --- !u!95 &-2091490011250303597
 Animator:
   serializedVersion: 4

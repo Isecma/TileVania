@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float flingSpeed;
     [SerializeField] GameObject bow;
     [SerializeField] GameObject arrow;
-    [SerializeField] AudioClip hitSound;
+    [SerializeField] AudioClip hitSFX;
 
     Vector2 moveInput;
     CinemachineVirtualCamera deathCamera;
@@ -165,7 +165,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (bodyCollider.IsTouchingLayers(enemyMask) || myRigidbody.IsTouchingLayers(hazardMask))
         {
-            AudioSource.PlayClipAtPoint(hitSound, transform.position);
+            AudioSource.PlayClipAtPoint(hitSFX, transform.position);
             isAlive = false;
             animator.SetTrigger("OnDeath");
             bodyCollider.isTrigger = true;
